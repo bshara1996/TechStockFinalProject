@@ -1,0 +1,26 @@
+Users for test, Password: 123456
+
+admin@gmail.com
+bshara.karkaby@gmail.com
+monermahkouly@gmail.com
+ryan.gosling@gmail.com
+robert.downey@gmail.com
+scarlett.johansson@gmail.com
+chris.evans@gmail.com
+keanu.reeves@gmail.com
+gal.gadot@gmail.com
+
+leonardo.dicaprio@gmail.com
+elon.musk@gmail.com
+bill.gates@gmail.com
+tom.cruise@gmail.com
+dwayne.johnson@gmail.com
+margot.robbie@gmail.com
+adam.sandler@gmail.com
+sacha.cohen@gmail.com
+steve.carell@gmail.com
+ben.stiller@gmail.com
+kevin.hart@gmail.com
+will.smith@gmail.com
+brad.pitt@gmail.com
+johnny.depp@gmail.com

@@ -1,0 +1,130 @@
+/* --- Sidebar.css --- */
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+.sidebar {
+  width: 245px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  font-size: 1.08rem; /* slightly reduced base text */
+}
+
+.sidebar-header {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #007bff;
+  background-color: #e9f7ff;
+  border-radius: 10px;
+  border: 1px solid #007bff;
+  width: fit-content;
+  padding: 9px 45px;
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.18rem; /* slightly reduced header size */
+}
+
+.sidebar-header svg {
+  filter: drop-shadow(0 0 8px rgba(0, 123, 255, 0.6))
+    drop-shadow(0 0 16px rgba(0, 123, 255, 0.4))
+    drop-shadow(0 0 24px rgba(0, 123, 255, 0.3));
+  color: #007bff;
+  font-size: 1.32rem; /* slightly smaller header icon */
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Keep header link visually identical to the header text */
+.sidebar-header-link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.sidebar-header-link:focus {
+  outline: none;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: 13px 16px; /* slightly reduced tappable area */
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-bottom: 7px;
+  transition: all 0.16s ease-in-out;
+  font-size: 1.08rem; /* slightly reduced nav link text */
+}
+
+.sidebar-nav a svg {
+  font-size: 1.18rem; /* slightly smaller link icon */
+  margin-right: 10px;
+  color: #6c757d;
+  vertical-align: middle;
+}
+
+.sidebar-nav a.active {
+  color: #007bff;
+  font-weight: bold;
+  background-color: #e9f7ff;
+}
+
+@media (min-width: 769px) {
+  .sidebar {
+    position: static; /* Let it be positioned by the flex container */
+    height: auto;
+    transform: translateX(0) !important;
+  }
+}
+
+/* Mobile: slightly reduce font so the sidebar fits comfortably */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 200px;
+    font-size: 0.98rem;
+  }
+
+  .sidebar-header {
+    font-size: 1.02rem;
+  }
+
+  .sidebar-nav a {
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+}
+
+/* --- Mobile Responsive Styles --- */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%); /* Hide off-screen by default */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Slide in when open */
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  }
+}

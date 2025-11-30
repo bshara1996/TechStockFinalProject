@@ -1,0 +1,216 @@
+/* ToastNotification.css */
+
+/* Toast Container for multiple toasts */
+.toast-container {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: 99999 !important;
+  pointer-events: none;
+  width: auto;
+  height: auto;
+  display: block !important;
+}
+
+.toast-notification {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  min-width: 300px;
+  max-width: 400px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 99999 !important;
+  transform: translateX(-400px);
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  will-change: transform, opacity;
+  border: 1px solid;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+  visibility: visible !important;
+}
+
+.toast-notification.show {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+/* Toast Types */
+.toast-notification.success {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.95) 0%, rgba(21, 128, 61, 0.95) 100%);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: white;
+}
+
+.toast-notification.error {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(185, 28, 28, 0.95) 100%);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: white;
+}
+
+.toast-notification.info {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.95) 0%, rgba(29, 78, 216, 0.95) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+/* Toast Content */
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.toast-icon {
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+.toast-icon.success {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.toast-icon.error {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.toast-icon.info {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.toast-message {
+  font-size: 0.95em;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Close Button */
+.toast-close-button {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close-button:hover {
+  color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .toast-notification {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    min-width: auto;
+    max-width: none;
+    width: calc(100% - 32px);
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-notification {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: calc(100% - 24px);
+    padding: 14px 16px;
+  }
+  
+  .toast-message {
+    font-size: 0.9em;
+  }
+  
+  .toast-icon {
+    font-size: 1.1em;
+  }
+}
+
+/* Confirmation Toast Styles */
+.toast-notification.confirm {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: #d1d5db !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
+}
+
+.toast-notification.confirm .toast-message {
+  color: #111827 !important;
+  font-weight: 500 !important;
+}
+
+.toast-notification.confirm .toast-content {
+  color: #111827 !important;
+}
+
+.toast-notification.confirm .toast-icon.confirm {
+  color: #f59e0b !important;
+}
+
+/* Toast Action Buttons */
+.toast-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.toast-action-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.confirm-button {
+  background-color: #dc2626;
+  color: white;
+}
+
+.confirm-button:hover {
+  background-color: #b91c1c;
+}
+
+.cancel-button {
+  background-color: #6b7280;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #4b5563;
+}
+
+/* Animation for multiple toasts (if needed in future) */
+.toast-notification:nth-child(2) {
+  bottom: 100px;
+}
+
+.toast-notification:nth-child(3) {
+  bottom: 180px;
+}
+
+.toast-notification:nth-child(4) {
+  bottom: 260px;
+}
+

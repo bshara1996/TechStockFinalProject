@@ -1,0 +1,191 @@
+/* ProductModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 0;
+  z-index: 1050; /* Ensure it's above other content */
+}
+
+.modal-content {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 38% !important;
+  max-width: 1600px !important; /* increased max width */
+  min-width: 320px; /* allow small screens */
+  max-height: 90vh; /* keep some viewport padding */
+  min-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Form Styles inside Modal */
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.form-row .form-group {
+  flex: 1 1 220px;
+  min-width: 160px;
+}
+
+.image-preview {
+  display: block;
+  margin: 12px auto;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  max-width: 280px; /* smaller preview width */
+  width: auto;
+  height: 360px; /* fixed height so object-fit can contain */
+  object-fit: contain; /* show entire image */
+  object-position: center center;
+  background-color: #fbfdff; /* subtle background for letterboxing */
+}
+
+/* Ensure image displays fully in the form */
+.product-form > .image-preview {
+  align-self: center;
+}
+
+.form-message {
+  text-align: center;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.form-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.submit-btn,
+.cancel-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Input validation styles */
+.form-input.error {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+.form-input.error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 1200px) {
+  .modal-content {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding-top: 20px;
+  }
+  .modal-content {
+    width: 95%;
+    min-width: unset;
+    max-width: 95%;
+    padding: 20px;
+    max-height: 90vh;
+    min-height: unset;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay {
+    padding-top: 10px;
+  }
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+}

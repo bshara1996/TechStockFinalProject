@@ -1,0 +1,464 @@
+/* Signup Page Styles */
+
+/* Main Container */
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.signup-container .signup-form-wrapper {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Remove the purple line - no ::before pseudo-element */
+
+/* Header */
+.signup-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.signup-title {
+  font-size: 2.2em;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.signup-subtitle {
+  color: #718096;
+  font-size: 1em;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+/* Form */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Add extra space when field is in error state to prevent overlap */
+.form-group:has(.form-input.error),
+.form-group.row .form-field:has(.form-input.error) {
+  margin-bottom: 44px;
+}
+
+.form-group.row {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.form-group.row .form-field {
+  flex: 1;
+  position: relative;
+}
+
+.form-group.row .form-input {
+  width: 100%;
+}
+
+/* Form Icons */
+.form-icon {
+  position: absolute;
+  left: 18px !important;
+  top: 50%;
+  transform: translateY(-50%); /* Perfect vertical centering */
+  color: #a0aec0;
+  font-size: 1.1em;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.form-group:focus-within .form-icon,
+.form-field:focus-within .form-icon {
+  color: #667eea;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.signup-form .form-input {
+  width: 100%;
+  padding: 16px 20px 16px 50px !important;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1em;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  background-color: #f8fafc;
+  color: #2d3748;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: none; /* Prevent any transform on focus */
+}
+
+.form-input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+/* Form Field with Icon - Removed as icons are no longer used */
+
+/* Password field with toggle */
+.form-group:has(.password-toggle) {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #a0aec0;
+  padding: 8px;
+  z-index: 1;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  font-size: 1.1em;
+}
+
+.password-toggle:hover {
+  color: #667eea;
+  background-color: #f7fafc;
+}
+
+/* Password input fields need extra padding for the toggle icon */
+.form-group:has(.password-toggle) .form-input {
+  padding-right: 45px;
+}
+
+.form-input.error {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+.form-input.error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.field-error {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 6px; /* Show below input */
+  color: #dc3545;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: transparent;
+  pointer-events: none;
+  white-space: normal;
+  max-width: 100%;
+  line-height: 1.2;
+  z-index: 2;
+}
+
+.form-input.success {
+  border-color: #28a745;
+  background-color: #f0fff4;
+}
+
+/* Password Requirements */
+.password-requirements {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  margin-top: 10px;
+}
+
+.password-requirements h4 {
+  margin: 0 0 10px 0;
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.password-requirements ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.password-requirements li {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.password-requirements li::before {
+  content: '•';
+  color: #667eea;
+  font-weight: bold;
+  position: absolute;
+  left: -15px;
+}
+
+.password-requirements li.valid {
+  color: #28a745;
+}
+
+.password-requirements li.valid::before {
+  content: '✓';
+  color: #28a745;
+}
+
+/* Error Messages */
+.error-message {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background-color: #fed7d7;
+  border-radius: 8px;
+  border-left: 4px solid #e53e3e;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.success-message {
+  color: #38a169;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background-color: #c6f6d5;
+  border-radius: 8px;
+  border-left: 4px solid #38a169;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Submit Button */
+.submit-button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submit-button.loading {
+  color: transparent;
+}
+
+.submit-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Login Link */
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.login-link-text {
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+.login-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.login-link a:hover {
+  color: #764ba2;
+  background-color: #f7fafc;
+  text-decoration: none;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 10px;
+}
+
+.strength-bar {
+  height: 4px;
+  background-color: #e1e5e9;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.strength-weak {
+  background-color: #dc3545;
+  width: 25%;
+}
+
+.strength-fair {
+  background-color: #ffc107;
+  width: 50%;
+}
+
+.strength-good {
+  background-color: #17a2b8;
+  width: 75%;
+}
+
+.strength-strong {
+  background-color: #28a745;
+  width: 100%;
+}
+
+.strength-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.strength-weak-text {
+  color: #dc3545;
+}
+
+.strength-fair-text {
+  color: #ffc107;
+}
+
+.strength-good-text {
+  color: #17a2b8;
+}
+
+.strength-strong-text {
+  color: #28a745;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .signup-container {
+    padding: 10px;
+  }
+  
+  .signup-form-wrapper {
+    padding: 30px 20px;
+  }
+  
+  .signup-title {
+    font-size: 1.5rem;
+  }
+  
+  .signup-form .form-input {
+    padding: 10px 14px 10px 40px !important;
+    font-size: 14px;
+  }
+  
+  .submit-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Animation for form appearance */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

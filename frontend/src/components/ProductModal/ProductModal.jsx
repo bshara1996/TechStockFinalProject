@@ -1,0 +1,359 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useSettings } from "../../context/SettingsContext";
+import { convertFromILSSync, convertToILS } from "../../utils/exchangeRate";
+import { getCurrencySymbol } from "../../utils/currency";
+import "./ProductModal.css";
+
+const ProductModal = ({
+  isOpen,
+  onClose,
+  product,
+  suppliers,
+  categories,
+  onSuccess,
+}) => {
+  const { currency } = useSettings();
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    image: "",
+    supplier_id: "",
+    category_id: "",
+  });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [message, setMessage] = useState("");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (product) {
+      // Editing an existing product - convert price from ILS to current currency
+      const priceInILS = product.price ? parseFloat(product.price) : 0;
+      const priceInCurrentCurrency =
+        priceInILS > 0 ? convertFromILSSync(priceInILS, currency) : 0;
+
+      setForm({
+        name: product.name || "",
+        description: product.description || "",
+        price:
+          priceInCurrentCurrency > 0 ? priceInCurrentCurrency.toFixed(2) : "",
+        stock: product.stock || "",
+        image: product.image || "",
+        supplier_id: product.supplier_id || "",
+        category_id: product.category_id || "",
+      });
+      setImagePreview(
+        product.image
+          ? product.image && product.image.startsWith("/uploads")
+            ? `http://localhost:3001${product.image}`
+            : product.image
+          : ""
+      );
+      setImageFile(null);
+    } else {
+      // Adding a new product
+      setForm({
+        name: "",
+        description: "",
+        price: "",
+        stock: "",
+        image: "",
+        supplier_id: "",
+        category_id: "",
+      });
+      setImagePreview("");
+      setImageFile(null);
+    }
+    setMessage("");
+  }, [product, isOpen, currency]);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Prevent negative values for price and stock
+    if (name === "price") {
+      const numValue = parseFloat(value);
+      if (value !== "" && (isNaN(numValue) || numValue < 0)) {
+        setMessage("Price must be a non-negative number");
+        return;
+      }
+    }
+
+    if (name === "stock") {
+      const numValue = parseInt(value);
+      if (
+        value !== "" &&
+        (isNaN(numValue) || numValue < 0 || !Number.isInteger(numValue))
+      ) {
+        setMessage("Stock must be a non-negative integer");
+        return;
+      }
+    }
+
+    setForm({ ...form, [name]: value });
+    setMessage(""); // Clear any previous error messages
+  };
+
+  const handleImageFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+      setForm({ ...form, image: "" }); // Clear image URL if file is selected
+    }
+  };
+
+  const handleImageUrlChange = (e) => {
+    setForm({ ...form, image: e.target.value });
+    setImageFile(null); // Clear file if URL is entered
+    setImagePreview(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("Submitting...");
+
+    if (!form.name || !form.price || !form.stock) {
+      setMessage("Name, price, and stock are required.");
+      return;
+    }
+
+    // Validate price and stock values
+    const priceInCurrentCurrency = parseFloat(form.price);
+    const stock = parseInt(form.stock);
+
+    if (isNaN(priceInCurrentCurrency) || priceInCurrentCurrency < 0) {
+      setMessage("Price must be a non-negative number.");
+      return;
+    }
+
+    if (isNaN(stock) || stock < 0 || !Number.isInteger(stock)) {
+      setMessage("Stock must be a non-negative integer.");
+      return;
+    }
+
+    // Convert price from current currency back to ILS for storage
+    const priceInILS = convertToILS(priceInCurrentCurrency, currency);
+
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("description", form.description);
+    formData.append("price", priceInILS.toFixed(2));
+    formData.append("stock", form.stock);
+    formData.append("supplier_id", form.supplier_id || "");
+    formData.append("category_id", form.category_id || "");
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    } else {
+      formData.append("image", form.image);
+    }
+
+    try {
+      let res;
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      if (product) {
+        // Update existing product
+        res = await axios.put(
+          `/api/products/${product.product_id}`,
+          formData,
+          config
+        );
+      } else {
+        // Create new product
+        res = await axios.post("/api/products", formData, config);
+      }
+      setMessage(res.data.message || "Success!");
+      onSuccess(!!product); // Trigger refresh on parent, pass true if editing
+      onClose(); // Close the modal
+    } catch (err) {
+      setMessage(err.response?.data?.message || "An error occurred.");
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <h2>{product ? "Edit Product" : "Add New Product"}</h2>
+        <form onSubmit={handleSubmit} className="product-form">
+          <div className="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Price ({getCurrencySymbol(currency)})</label>
+              <input
+                type="number"
+                name="price"
+                value={form.price}
+                onChange={handleChange}
+                required
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+              />
+            </div>
+            <div className="form-group">
+              <label>Stock</label>
+              <input
+                type="number"
+                name="stock"
+                value={form.stock}
+                onChange={handleChange}
+                required
+                min="0"
+                placeholder="0"
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label>Image URL</label>
+            <input
+              type="text"
+              name="image"
+              value={form.image}
+              onChange={handleImageUrlChange}
+              placeholder="Enter image URL or upload a file"
+            />
+          </div>
+          <div className="form-group">
+            <label>Or Upload Image File</label>
+            <input
+              type="file"
+              onChange={handleImageFileChange}
+              accept="image/*"
+            />
+          </div>
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Product Preview"
+              className="image-preview"
+            />
+          )}
+          <div className="form-row">
+            <div className="form-group">
+              <label>Supplier</label>
+              <select
+                name="supplier_id"
+                value={form.supplier_id}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  -- Select Supplier --
+                </option>
+                {[...suppliers]
+                  .sort((a, b) => {
+                    // Active items first (isActive = 1 or true), then inactive
+                    const aActive = a.isActive === 1 || a.isActive === true;
+                    const bActive = b.isActive === 1 || b.isActive === true;
+                    if (aActive === bActive) {
+                      // If same status, sort by name
+                      return (a.name || "").localeCompare(b.name || "");
+                    }
+                    return aActive ? -1 : 1; // Active comes first
+                  })
+                  .map((s) => (
+                    <option
+                      key={s.supplier_id}
+                      value={s.supplier_id}
+                      disabled={s.isActive === 0 || s.isActive === false}
+                    >
+                      {s.name}
+                      {s.isActive === 0 || s.isActive === false
+                        ? " (Inactive)"
+                        : ""}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label>Category</label>
+              <select
+                name="category_id"
+                value={form.category_id}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  -- Select Category --
+                </option>
+                {[...categories]
+                  .sort((a, b) => {
+                    // Active items first (isActive = 1 or true), then inactive
+                    const aActive = a.isActive === 1 || a.isActive === true;
+                    const bActive = b.isActive === 1 || b.isActive === true;
+                    if (aActive === bActive) {
+                      // If same status, sort by name
+                      return (a.name || "").localeCompare(b.name || "");
+                    }
+                    return aActive ? -1 : 1; // Active comes first
+                  })
+                  .map((c) => (
+                    <option
+                      key={c.category_id}
+                      value={c.category_id}
+                      disabled={c.isActive === 0 || c.isActive === false}
+                    >
+                      {c.name}
+                      {c.isActive === 0 || c.isActive === false
+                        ? " (Inactive)"
+                        : ""}
+                    </option>
+                  ))}
+              </select>
+            </div>
+          </div>
+          {message && (
+            <p
+              className={`form-message ${
+                message.includes("must be") || message.includes("required")
+                  ? "error"
+                  : "success"
+              }`}
+            >
+              {message}
+            </p>
+          )}
+          <div className="form-actions">
+            <button type="submit" className="submit-btn">
+              {product ? "Update Product" : "Add Product"}
+            </button>
+            <button type="button" onClick={onClose} className="cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default ProductModal;

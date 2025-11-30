@@ -1,0 +1,316 @@
+/* Base Styles for the Header */
+
+/* User Icon */
+.header-user-icon {
+  margin-right: 8px;
+}
+.header-nav {
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative; /* Needed for the mobile menu positioning */
+  gap: 20px;
+}
+
+.header-left,
+.header-right,
+.header-nav-links,
+.header-auth-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Push the right-side header block (search + auth) to the far end
+   so when other nav links are absent (e.g. manager/admin) the
+   profile + logout stay aligned to the right. */
+.header-right {
+  margin-left: auto;
+}
+
+.header-nav-links a,
+.header-auth-links a,
+.header-auth-links button {
+  padding: 8px 12px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em; /* Ensure consistent font size */
+}
+
+.header-nav-links a:hover,
+.header-auth-links a:hover {
+  background-color: #f0f0f0;
+}
+
+.header-nav-links .cart-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-nav-links .cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff4500 0%, #ff6b35 100%);
+  color: white;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  margin-right: 15px;
+  border: 1px solid rgba(25, 118, 210, 0.12);
+  border: 2px solid white;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+/* Handle double digit numbers */
+.header-nav-links .cart-badge {
+  padding: 0 2px;
+  min-width: 20px;
+  width: auto;
+}
+
+/* Hover effect for cart link */
+.header-nav-links .cart-link:hover .cart-badge {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(255, 69, 0, 0.4);
+}
+
+.header-auth-welcome a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background-color 0.15s ease, transform 0.12s ease,
+    box-shadow 0.18s ease;
+  font-size: 1.2rem;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(25, 118, 210, 0.06),
+    rgba(25, 118, 210, 0.02)
+  );
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(25, 118, 210, 0.12);
+  box-shadow: 0 1px 2px rgba(25, 118, 210, 0.04);
+}
+
+.header-auth-welcome a:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(227, 242, 253, 1),
+    rgba(255, 255, 255, 0)
+  );
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(25, 118, 210, 0.12);
+}
+
+.header-auth-welcome a:focus {
+  outline: 3px solid rgba(25, 118, 210, 0.16);
+  outline-offset: 2px;
+}
+
+.header-auth-logout-btn {
+  padding: 6px 12px !important;
+  border: 1px solid #d32f2f !important; /* red border */
+  color: #d32f2f !important; /* red text */
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 1.05rem !important;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  transition: background-color 0.18s ease, color 0.18s ease,
+    transform 0.12s ease, box-shadow 0.18s ease;
+  margin-left: 15px;
+}
+
+.header-auth-logout-btn:hover {
+  background-color: #d32f2f !important; /* red hover */
+  color: #fff !important; /* white text */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(211, 47, 47, 0.25); /* red shadow */
+}
+
+.header-auth-logout-btn:focus {
+  outline: 3px solid rgba(211, 47, 47, 0.35); /* red outline */
+  outline-offset: 2px;
+}
+
+.manager-link {
+  padding: 8px 12px;
+  color: #1976d2 !important;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+/* This container wraps all the links that collapse into the mobile menu */
+.header-nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 20px;
+}
+
+/* Search Container - Now in header-right */
+.header-search-container {
+  max-width: 390px;
+  min-width: 340px;
+}
+
+/* Hamburger Menu Icon */
+.hamburger-menu {
+  display: none; /* Hidden by default on desktop */
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 20;
+}
+
+.hamburger-menu div {
+  width: 2rem;
+  height: 0.25rem;
+  background: #333;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 992px) {
+  /* Breakpoint for tablets and mobile */
+  .header-search-container {
+    max-width: 250px;
+    min-width: 200px;
+  }
+
+  /* stacked layout: don't push the right block when items stack */
+  .header-right {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .header-nav-container {
+    display: none; /* Hide the nav links container by default */
+    flex-direction: column;
+    position: absolute;
+    top: 100%; /* Position below the header */
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100; /* Ensure menu appears above other content */
+  }
+
+  .header-nav-container.active {
+    display: flex; /* Show when active */
+  }
+
+  .header-nav-links,
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+
+  .header-nav-links a,
+  .header-right > div,
+  .manager-link {
+    padding: 15px 20px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  /* Mobile cart badge adjustments */
+  .header-nav-links .cart-badge {
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.7em;
+    border: 1px solid white;
+  }
+
+  .header-search-container {
+    width: 100%;
+    max-width: none;
+    min-width: auto;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .hamburger-menu {
+    display: flex; /* Show the hamburger icon */
+  }
+}
+
+@media (max-width: 768px) {
+  .header-nav {
+    padding: 10px 15px;
+    gap: 10px;
+  }
+
+  .header-search-container {
+    max-width: 220px;
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-nav {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  /* Extra small screens cart badge */
+  .header-nav-links .cart-badge {
+    top: -4px;
+    right: -4px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 0.65em;
+    font-weight: 600;
+  }
+
+  .header-search-container {
+    max-width: 180px;
+    min-width: 150px;
+  }
+
+  /* stacked layout: remove left margin so buttons align nicely */
+  .header-auth-logout-btn {
+    margin-left: 0;
+  }
+}
