@@ -33,7 +33,6 @@ TechStock is a comprehensive e-commerce solution that enables users to browse, s
 - MySQL2 for database connectivity
 - JWT for authentication
 - bcryptjs for password hashing
-- PayPal for payment processing
 - Nodemailer for email notifications
 - PDFKit for invoice generation
 - Multer for file uploads
